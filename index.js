@@ -48,7 +48,7 @@ const match = (...args) => (thing) => {
           }
         }
         if (typeof item === 'string' || typeof item === 'number') {
-          if (thing[index] === currentCase) {
+          if (thing[index] === item) {
             return true;
           }
         }
@@ -98,6 +98,8 @@ let W = Symbol('$__wildcard__$');
 let _W = Symbol('$__rest__$');
 let _ = Symbol('_');
 let string = Symbol('String');
+let number = Symbol('Number');
+let boolean = Symbol('Boolean');
 let dog = Symbol('Dog');
 let pug = Symbol('Pug');
 
@@ -128,13 +130,22 @@ console.log(doubleOddIndices([1,2,3,4,5]));
 
 let doubleOddIndices$ = match(
   [ [], () => [] ],
+  [ [W, 'hello'], a => 'good moorning?' ],
   [ [W], a => a ],
   [ [W, _W], ([a, b, ...c]) => [a].concat([b*2]).concat(doubleOddIndices(c)) ]
 )
 
-console.log(doubleOddIndices$([1,2,3,4,5]));
+console.log(doubleOddIndices$([1, 2, 3, 4, 5, 'hello']));
 
-module.exports = match;
+module.exports = {
+  match,
+  string,
+  number,
+  boolean,
+  _,
+  W,
+  _W
+};
 
 // def printType(o: Any): Unit = {
 //   o match {
